@@ -27,10 +27,22 @@ export default {
   methods: {
     onSubmit (evt) {
       evt.preventDefault()
-      alert(JSON.stringify(this.form))
+      this.$axios.$post('/contatos', this.form)
+        .then((data) => {
+          this.$swal({
+            icon: 'success',
+            text: 'Contato salvo com sucesso'
+          })
+          this.onReset()
+        })
+        .catch(() =>
+          this.$swal({
+            icon: 'error',
+            text: 'Ocorreu um erro ao salvar'
+          })
+        )
     },
-    onReset (evt) {
-      evt.preventDefault()
+    onReset () {
       this.form = {
         nome: '',
         telefone: '',
