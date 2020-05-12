@@ -37,14 +37,12 @@ export default {
   methods: {
     onSubmit (evt) {
       evt.preventDefault()
-      // this.$axios.$post('/contatos', this.form)
       this.$axios({ method: this.getMetodo(), url: this.getUrl(), data: this.form })
         .then(({ data }) => {
           this.$swal({
             icon: 'success',
             text: 'Contato salvo com sucesso'
           })
-          // this.$store.commit('addContato', data)
           this.contatoStore(data)
           this.onReset()
         })
