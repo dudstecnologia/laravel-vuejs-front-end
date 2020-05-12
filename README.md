@@ -1,22 +1,11 @@
-# contatos-front
+## Laravel e Vue.js - Primeiros passos
 
-> Projeto de estudo Laravel e Vue.js
+<p>Este projeto foi desenvolvido para o Post Laravel e Vue.js, 
+nesta pasta está apenas o projeto do Front-end, acesse o 
+mesmo <a href="https://www.linkedin.com/pulse/laravel-e-vuejs-front-end-eduardo-silva">aqui.</a></p>
 
-## Build Setup
-
-```bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+<p>Instruções:</p>
+<ul>
+    <li>yarn install <strong>ou</strong> npm install</li>
+    <li>yarn dev <strong>ou</strong> npm run dev</li>
+</ul>
