@@ -2,10 +2,10 @@
   <div class="mt-3">
     <b-table bordered head-variant="light" :busy="carregando" :items="contatos" :fields="cabecalho">
       <template v-slot:cell(action)="data">
-        <b-button size="sm" variant="info" @click="editar(data.item.id)">
+        <b-button size="sm" variant="info" @click="editar(data.item)">
           Editar
         </b-button>
-        <b-button size="sm" variant="danger" @click="excluir(data.item.id)">
+        <b-button size="sm" variant="danger" @click="excluir(data.item)">
           Excluir
         </b-button>
       </template>
@@ -30,14 +30,18 @@ export default {
         { key: 'telefone', label: 'Telefone', sortable: true },
         { key: 'idade', label: 'Idade', sortable: true },
         { key: 'action', label: 'Ações' }
-      ],
-      contatos: []
+      ]
+    }
+  },
+  computed: {
+    contatos () {
+      return this.$store.state.contatos
     }
   },
   mounted () {
     this.$axios.$get('/contatos')
       .then((data) => {
-        this.contatos = data
+        this.$store.commit('setContatos', data)
       })
       .catch(() =>
         this.$swal({
@@ -47,11 +51,11 @@ export default {
       )
   },
   methods: {
-    editar (id) {
-      alert(id)
+    editar (contato) {
+      this.$store.commit('selecionarContato', contato)
     },
-    excluir (id) {
-      alert(id)
+    excluir (contato) {
+      this.$store.commit('excluirContato', contato)
     }
   }
 }

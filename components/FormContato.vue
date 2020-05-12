@@ -24,15 +24,28 @@ export default {
       }
     }
   },
+  computed: {
+    selecionado () {
+      return this.$store.state.selecionado
+    }
+  },
+  watch: {
+    selecionado (value) {
+      this.form = Object.assign({}, value)
+    }
+  },
   methods: {
     onSubmit (evt) {
       evt.preventDefault()
-      this.$axios.$post('/contatos', this.form)
-        .then((data) => {
+      // this.$axios.$post('/contatos', this.form)
+      this.$axios({ method: this.getMetodo(), url: this.getUrl(), data: this.form })
+        .then(({ data }) => {
           this.$swal({
             icon: 'success',
             text: 'Contato salvo com sucesso'
           })
+          // this.$store.commit('addContato', data)
+          this.contatoStore(data)
           this.onReset()
         })
         .catch(() =>
@@ -43,11 +56,25 @@ export default {
         )
     },
     onReset () {
+      this.$store.commit('selecionarContato', null)
       this.form = {
         nome: '',
         telefone: '',
         idade: ''
       }
+    },
+    contatoStore (contato) {
+      if (this.selecionado) {
+        this.$store.commit('atualizarContato', contato)
+      } else {
+        this.$store.commit('addContato', contato)
+      }
+    },
+    getMetodo () {
+      return this.selecionado ? 'put' : 'post'
+    },
+    getUrl () {
+      return this.selecionado ? `/contatos/${this.selecionado.id}` : '/contatos'
     }
   }
 }
