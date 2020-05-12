@@ -5,7 +5,7 @@
         <b-button size="sm" variant="info" @click="editar(data.item)">
           Editar
         </b-button>
-        <b-button size="sm" variant="danger" @click="excluir(data.item)">
+        <b-button size="sm" variant="danger" @click="confirmaExclusao(data.item)">
           Excluir
         </b-button>
       </template>
@@ -39,23 +39,56 @@ export default {
     }
   },
   mounted () {
-    this.$axios.$get('/contatos')
-      .then((data) => {
-        this.$store.commit('setContatos', data)
-      })
-      .catch(() =>
-        this.$swal({
-          icon: 'error',
-          text: 'Ocorreu um erro ao listar'
-        })
-      )
+    this.buscarContatos()
   },
   methods: {
+    buscarContatos () {
+      this.carregando = true
+      this.$axios.$get('/contatos')
+        .then((data) => {
+          this.$store.commit('setContatos', data)
+        })
+        .catch(() =>
+          this.$swal({
+            icon: 'error',
+            text: 'Ocorreu um erro ao listar'
+          })
+        )
+        .then(() => {
+          this.carregando = false
+        })
+    },
     editar (contato) {
       this.$store.commit('selecionarContato', contato)
     },
+    confirmaExclusao (contato) {
+      this.$swal({
+        text: 'Deseja mesmo excluir este contato?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Não'
+      }).then((result) => {
+        if (result.value) {
+          this.excluir(contato)
+        }
+      })
+    },
     excluir (contato) {
-      this.$store.commit('excluirContato', contato)
+      this.$axios.$delete(`contatos/${contato.id}`)
+        .then((data) => {
+          this.$store.commit('excluirContato', contato)
+          this.$swal({
+            icon: 'success',
+            text: 'Contato excluído com sucesso'
+          })
+        })
+        .catch(() => {
+          this.$swal({
+            icon: 'error',
+            text: 'Ocorreu um erro ao excluir'
+          })
+        })
     }
   }
 }
