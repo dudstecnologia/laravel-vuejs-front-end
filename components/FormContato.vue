@@ -1,8 +1,8 @@
 <template>
   <b-form class="mt-3" inline @submit="onSubmit" @reset="onReset">
-    <b-input id="nome" v-model="form.nome" class="mb-2 mr-2" placeholder="Nome *" required />
-    <b-input id="telefone" v-model="form.telefone" class="mb-2 mr-2" placeholder="Telefone *" required />
-    <b-input id="idade" v-model="form.idade" class="mb-2 mr-2" placeholder="Idade *" required />
+    <b-input v-model="form.nome" class="mb-2 mr-2" placeholder="Nome *" required />
+    <b-input v-model="form.telefone" class="mb-2 mr-2" placeholder="Telefone *" required />
+    <b-input v-model="form.idade" class="mb-2 mr-2" placeholder="Idade *" required />
 
     <b-button class="mr-2" type="submit" variant="info">
       Salvar
