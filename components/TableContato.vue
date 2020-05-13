@@ -75,7 +75,7 @@ export default {
       })
     },
     excluir (contato) {
-      this.$axios.$delete(`contatos/${contato.id}`)
+      this.$axios.$delete(`/contatos/${contato.id}`)
         .then((data) => {
           this.$store.commit('excluirContato', contato)
           this.$swal({

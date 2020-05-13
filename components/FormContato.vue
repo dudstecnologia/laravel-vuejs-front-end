@@ -53,14 +53,6 @@ export default {
           })
         )
     },
-    onReset () {
-      this.$store.commit('selecionarContato', null)
-      this.form = {
-        nome: '',
-        telefone: '',
-        idade: ''
-      }
-    },
     contatoStore (contato) {
       if (this.selecionado) {
         this.$store.commit('atualizarContato', contato)
@@ -73,6 +65,14 @@ export default {
     },
     getUrl () {
       return this.selecionado ? `/contatos/${this.selecionado.id}` : '/contatos'
+    },
+    onReset () {
+      this.$store.commit('selecionarContato', null)
+      this.form = {
+        nome: '',
+        telefone: '',
+        idade: ''
+      }
     }
   }
 }
